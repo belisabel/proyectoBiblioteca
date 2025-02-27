@@ -2,7 +2,7 @@ package com.egg.biblioteca.entities;
 
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
+
 
 
 import jakarta.persistence.*;

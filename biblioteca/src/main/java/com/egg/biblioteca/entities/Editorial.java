@@ -12,6 +12,7 @@ public class Editorial {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    private String nombre;
     public Editorial() {
     }
 
@@ -31,6 +32,6 @@ public class Editorial {
         this.nombre = nombre;
     }
 
-    private String nombre;
+    
     
 }
