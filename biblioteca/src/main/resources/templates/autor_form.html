@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="utf-8" >
-    <title>Biblioteca Egg</title>
-    <link href="css/one-page-wonder.min.css" rel="stylesheet">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/index.css">
-</head>
-
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Registro de Autores</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/formulario.css">
+    </head>
     <body>
-        <nav class="navbar navbar-expand-lg navBar">
+
+       <nav class="navbar navbar-expand-lg navBar">
             <div class="containerImg">
                 <a href="/" class="navbar-brand d-flex align-items-center">
                   <img class="logo" src="/img/Egg.png" alt="Img logo egg">
@@ -65,34 +63,38 @@
               </ul>
             </div>
           </nav>
+        <div class="container-fluid m-5 contenedor">
+
+            <form class="formulario" th:action="@{/autor/registro}" method="POST">
+                <div class="form-group my-3">
+                    <label class="mb-2">Cargar Autores</label> 
+                    <input type="text" class="form-control" name="nombre"   placeholder="Nombre del Autor">
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 botones">Guardar</button>
+            </form>
+
+                    <section class=" text-center container">
+                <div class="row mt-3">
+                    <div class="divVolver">
+                        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                    </div>
+                </div>
+            </section>
+        </div>
 
         <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
             <div class="card-body">
-                <h5 class="card-title">Exito</h5>
+                <h5 class="card-title">Exito!</h5>
                 <p class="card-text" th:text="${exito}"></p>
             </div>
         </div>
         <div th:if="${error}!=null" class="card text-white bg-danger mb-3 mensajeError" >
             <div class="card-body">
-                <h5 class="card-title">Error ð</h5>
+                <h5 class="card-title">Error 👎</h5>
                 <p class="card-text" th:text="${error}"></p>
             </div>
         </div>
-        <header class="header">
-            <section class="contenedorMain">
-                <div class="tituloBiblioteca">
-                    <a class="navbar-brand" href="#">BIBLIOTECA EGG</a>
-                </div>
-                <div class="container contenedorLibros">
-                    <p class="tituloLibros">Encontrá todos los Libros Aquí!</p>
-
-                </div>
-                <div class="bg-circle-1 bg-circle"></div>
-                <div class="bg-circle-2 bg-circle"></div>
-                <div class="bg-circle-3 bg-circle"></div>
-                <div class="bg-circle-4 bg-circle"></div>
-            </section>
-        </header>
 
         <footer class="text-muted py-5">
             <div class="containerFooter">
@@ -105,10 +107,6 @@
         </footer>
 
 
-
-        <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-
     </body>
-
 </html>
