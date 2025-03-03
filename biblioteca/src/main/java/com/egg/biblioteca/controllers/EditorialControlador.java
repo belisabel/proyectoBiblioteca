@@ -31,7 +31,7 @@ public class EditorialControlador {
     public String registro(@RequestParam String nombre,ModelMap modelo) {
         try {
             editorialServicio.crearEditorial(nombre);  // llamo a mi servicio para persistir 
-            modelo.put("exito", "El autor fue cargado exitosamente");        
+            modelo.put("exito", "La editorial fue cargada exitosamente");        
         } catch (MyException ex) {     
             modelo.put("error",ex.getMessage());     
             Logger.getLogger(EditorialControlador.class.getName()).log(Level.SEVERE, null, ex);
