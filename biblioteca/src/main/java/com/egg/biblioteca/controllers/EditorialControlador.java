@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,12 @@ public class EditorialControlador {
     }
 
      @PostMapping("/registro") // localhost:8080/editorial/registro
-    public String registro(@RequestParam String nombre) {
+    public String registro(@RequestParam String nombre,ModelMap modelo) {
         try {
-            editorialServicio.crearEditorial(nombre);  // llamo a mi servicio para persistir        
-        } catch (MyException ex) {          
+            editorialServicio.crearEditorial(nombre);  // llamo a mi servicio para persistir 
+            modelo.put("exito", "El autor fue cargado exitosamente");        
+        } catch (MyException ex) {     
+            modelo.put("error",ex.getMessage());     
             Logger.getLogger(EditorialControlador.class.getName()).log(Level.SEVERE, null, ex);
             return "editorial_form.html";
         }        
