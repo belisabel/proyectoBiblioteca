@@ -48,21 +48,30 @@ public class AutorControlador {
         return "index.html";
     }
 
-    @GetMapping("/lista") // localhost:8080/autor/lista
-    public String lista(ModelMap modelo) {
+    @GetMapping("/lista")
+    public String listar(ModelMap modelo) {
 
-        List<Autor> autores1 = autorServicio.listarAutores();
+
+        List<Autor> autores = autorServicio.listarAutores();
+        modelo.addAttribute("autores", autores);
+        return "autor_list.html";
+    }
+
+    // @GetMapping("/lista") // localhost:8080/autor/lista
+    // public String lista(ModelMap modelo) {
+
+    //     List<Autor> autores1 = autorServicio.listarAutores();
     
-        if (autores1 == null || autores1.isEmpty()) {
-            System.out.println("La lista de autores está vacía.");
-        } else {
-            for (Autor autor : autores1) {
-                System.out.println(autor.getNombre());
-            }
-        }
+    //     if (autores1 == null || autores1.isEmpty()) {
+    //         System.out.println("La lista de autores está vacía.");
+    //     } else {
+    //         for (Autor autor : autores1) {
+    //             System.out.println(autor.getNombre());
+    //         }
+    //     }
     
-        return "autor_form.html";
+    //     return "autor_form.html";
      
        
-    }
+    // }
 }
