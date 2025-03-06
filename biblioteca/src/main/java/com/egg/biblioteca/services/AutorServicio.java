@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.egg.biblioteca.entities.Autor;
+import com.egg.biblioteca.entities.Editorial;
 import com.egg.biblioteca.exceptions.MyException;
 import com.egg.biblioteca.entities.Autor;
 import com.egg.biblioteca.repositories.AutorRepositorio;
@@ -19,8 +20,7 @@ import jakarta.transaction.Transactional;
 public class AutorServicio {
 
     @Autowired
-    private AutorRepositorio autorRepositorio;
-;
+    private AutorRepositorio autorRepositorio;;
 
     @Transactional
     public void crearAutor(String nombre) throws MyException {
@@ -41,13 +41,13 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void modificarAutor(String nombre, UUID id) throws MyException {    
-        
+    public void modificarAutor(String nombre, UUID id) throws MyException {
+
         validar(nombre);
         Optional<Autor> respuesta = autorRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Autor autor = respuesta.get();
-           
+
             autor.setNombre(nombre);
             autorRepositorio.save(autor);
         }
@@ -55,8 +55,13 @@ public class AutorServicio {
 
     private void validar(String nombre) throws MyException {
         if (nombre.isEmpty() || nombre == null) {
-        throw new MyException("el nombre no puede ser nulo o estar vacío");
-             }
-          }
+            throw new MyException("el nombre no puede ser nulo o estar vacío");
+        }
+    }
+
+    @Transactional //(readOnly = true)
+    public Autor getOne(UUID id) {
+        return autorRepositorio.getReferenceById(id);
+    }
 
 }

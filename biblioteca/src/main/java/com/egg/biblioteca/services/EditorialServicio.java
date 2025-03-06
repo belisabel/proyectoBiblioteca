@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.egg.biblioteca.entities.Autor;
 import com.egg.biblioteca.entities.Editorial;
 import com.egg.biblioteca.exceptions.MyException;
 
@@ -56,5 +57,11 @@ public class EditorialServicio {
             throw new MyException("el nombre no puede ser nulo o estar vacío");
         }
     }
+
+        @Transactional //(readOnly = true)
+    public Editorial getOne(String id) {
+        return editorialRepositorio.getReferenceById(id);
+    }
+
 
 }
