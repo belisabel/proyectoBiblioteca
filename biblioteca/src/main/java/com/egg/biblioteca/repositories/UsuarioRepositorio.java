@@ -14,10 +14,13 @@ import com.egg.biblioteca.entities.Usuario;
 public interface UsuarioRepositorio extends JpaRepository<Usuario,String> {
 
 
-    @Query("SELECT u FROM Usuario u WHERE u.email = :email")
- public Usuario buscarPorEmail(@Param("email") String email);
+//     @Query("SELECT u FROM Usuario u WHERE u.email = :email")
+//  public Usuario buscarPorEmail(@Param("email") String email);
 
+
+    Usuario findByEmail(String email);
+}
     
     // Crea un método llamado buscarPorEmail, 
     // que recibirá un parámetro de tipo String (el email del usuario) y devolverá el usuario correspondiente.
-}
+

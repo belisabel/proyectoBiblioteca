@@ -77,7 +77,7 @@
                     <tr>
                         <th scope="col">Id del Autor</th>
                         <th scope="col">Nombre del Autor</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col" sec:authorize="hasRole('ADMIN')" >Acciones</th>
 
                     </tr>
                 </thead>
@@ -86,7 +86,7 @@
                         <th scope="row" th:text="${autor.id}"></th>
                         <td th:text="${autor.nombre}"></td>
                         <td>
-                            <a th:href= "@{/autor/modificar/__${autor.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+                            <a sec:authorize="hasRole('ADMIN')" th:href= "@{/autor/modificar/__${autor.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
                         </td>
 
                     </tr>
