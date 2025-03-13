@@ -1,11 +1,10 @@
 package com.egg.biblioteca.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.egg.biblioteca.enumerations.Rol;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 
 @Entity
@@ -25,6 +24,16 @@ public class Usuario {
     // Debemos indicar que es una enumeración con la anotación correspondiente e
     // indicar qué tipo de estrategia utilizará con el dato. En este caso:
     // EnumType.STRING
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Imagen imagen;
+
+    public Imagen getImagen() {
+        return imagen;
+    }
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
+    }
     public Usuario() {
     }
     public String getId() {

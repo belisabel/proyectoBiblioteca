@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity //(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled=true)
 public class SeguridadWeb {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
