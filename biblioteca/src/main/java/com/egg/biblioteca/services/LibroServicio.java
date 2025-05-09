@@ -18,7 +18,7 @@ import com.egg.biblioteca.repositories.LibroRepositorio;
 import com.egg.biblioteca.repositories.AutorRepositorio;
 import com.egg.biblioteca.repositories.EditorialRepositorio;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LibroServicio {
@@ -49,7 +49,7 @@ public class LibroServicio {
         libroRepositorio.save(libro);
     }
 
-    @Transactional // (readOnly = true)
+    @Transactional(readOnly = true)
     public List<Libro> listarLibros() {
 
         List<Libro> libros = new ArrayList<>();
@@ -114,7 +114,7 @@ public class LibroServicio {
 
     
 
-    @Transactional // (readOnly = true)
+    @Transactional(readOnly = true)
     public Libro getOne(Long isbn) {
         return libroRepositorio.getReferenceById(isbn);
     }

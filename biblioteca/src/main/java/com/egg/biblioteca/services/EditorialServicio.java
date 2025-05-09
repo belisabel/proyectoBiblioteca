@@ -3,18 +3,18 @@ package com.egg.biblioteca.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.egg.biblioteca.entities.Autor;
+
 import com.egg.biblioteca.entities.Editorial;
 import com.egg.biblioteca.exceptions.MyException;
 
 import com.egg.biblioteca.repositories.EditorialRepositorio;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EditorialServicio {
@@ -58,7 +58,7 @@ public class EditorialServicio {
         }
     }
 
-        @Transactional //(readOnly = true)
+        @Transactional(readOnly = true)
     public Editorial getOne(String id) {
         return editorialRepositorio.getReferenceById(id);
     }

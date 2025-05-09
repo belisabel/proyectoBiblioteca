@@ -21,7 +21,7 @@ import com.egg.biblioteca.services.ImagenServicio;
 import com.egg.biblioteca.services.UsuarioServicio;
 
 @Controller
-@RequestMapping("/imagen")
+@RequestMapping("/imagen") 
 public class ImagenControlador {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ImagenControlador {
     @Autowired
     private ImagenServicio imagenServicio;
 
-    @GetMapping("/perfil/{id}")
+    @GetMapping("/perfil/{id}") // 
     public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) {
         Usuario usuario = usuarioServicio.getOne(id);
 

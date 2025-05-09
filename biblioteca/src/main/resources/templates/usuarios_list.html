@@ -21,27 +21,46 @@
             <table class="table table-dark">
                 <thead>
                     <tr>
-                        <th scope="col">ISBN del libro</th>
-                        <th scope="col">Título del libro</th>
-                        <th scope="col">Ejemplares</th>
-                        <th scope="col">Alta</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Editorial</th>
-                        <th scope="col" sec:authorize="hasRole('ADMIN')">Acciones</th>
+                        <th scope="col">Id del usuario</th>
+                        <th scope="col">Nombre del usuario</th>
+                        <th scope="col">Email del usuario</th>
+                        <th scope="col">Rol del usuario</th>
+                        
+                        
 
                     </tr>
                 </thead>
-                <tbody th:each="libro : ${libros}"> 
+                <tbody th:each="usuario : ${usuarios}"> 
                     <tr>
-                        <th scope="row" th:text="${libro.isbn}"></th>
-                        <td th:text="${libro.titulo}"></td>
-                        <td th:text="${libro.ejemplares}"></td>
-                        <td th:text="${libro.alta}"></td>   
-                        <td th:text="${libro.autor.nombre}"></td>
-                        <td th:text="${libro.editorial.nombre}"></td>
+                        <th scope="row" th:text="${usuario.id}"></th>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.email}"></td>
                         <td>
-                            <a sec:authorize="hasRole('ADMIN')" th:href= "@{/libro/modificar/__${libro.isbn}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+                            <span th:text="${usuario.rol}"></span>
+                            |
+                        
+                            <!-- Mostrar botón Hacer ADMIN solo si el rol actual es USER -->
+                            <form th:if="${usuario.rol.name() == 'USER'}"
+                                  th:action="@{'/admin/editarRol2/' + ${usuario.id}}" 
+                                  method="post" 
+                                  style="display:inline;">
+                                <input type="hidden" name="rol" value="ADMIN"/>
+                                
+                                <button type="submit" class="btn btn-sm btn-warning">Hacer ADMIN</button>
+                            </form>
+                        
+                            <!-- Mostrar botón Hacer USER solo si el rol actual es ADMIN -->
+                            <form th:if="${usuario.rol.name() == 'ADMIN'}"
+                                  th:action="@{'/admin/editarRol2/' + ${usuario.id}}" 
+                                  method="post" 
+                                  style="display:inline;">
+                                <input type="hidden" name="rol" value="USER"/>
+                                
+                                <button type="submit" class="btn btn-sm btn-secondary">Hacer USER</button>
+                            </form>
                         </td>
+                        
+                        
 
                     </tr>
 

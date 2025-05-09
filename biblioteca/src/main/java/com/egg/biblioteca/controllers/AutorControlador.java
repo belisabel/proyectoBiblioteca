@@ -48,10 +48,10 @@ public class AutorControlador {
             Logger.getLogger(AutorControlador.class.getName()).log(Level.SEVERE, null, ex);
             return "autor_form.html";
         }        
-        return "index.html";
+        return "inicio.html";
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/lista") // obtiene la lista de autores guardados
     public String listar(ModelMap modelo) {
 
 
@@ -60,7 +60,7 @@ public class AutorControlador {
         return "autor_list.html";
     }
 
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar/{id}") // modifica autor según id Get, primero obtiene el id y recien lanza formulario de modificación
     public String modificar(@PathVariable UUID id, ModelMap modelo) {
         modelo.put("autor", autorServicio.getOne(id));
 
@@ -69,7 +69,7 @@ public class AutorControlador {
     }
 
 
-    @PostMapping("/modificar/{id}") 
+    @PostMapping("/modificar/{id}") // modifica autor Post
     public String modificar(@PathVariable UUID id, String nombre, ModelMap modelo) {
         try {
             autorServicio.modificarAutor(nombre, id);

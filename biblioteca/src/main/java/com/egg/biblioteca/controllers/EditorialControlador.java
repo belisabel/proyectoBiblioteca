@@ -26,7 +26,7 @@ public class EditorialControlador {
     @Autowired
     private EditorialServicio editorialServicio;
 
-    @GetMapping("/registrar")
+    @GetMapping("/registrar") // lanza el formulario de registro de editoriales
     public String registrar() {
 
         return "editorial_form.html";
@@ -42,10 +42,10 @@ public class EditorialControlador {
             Logger.getLogger(EditorialControlador.class.getName()).log(Level.SEVERE, null, ex);
             return "editorial_form.html";
         }
-        return "index.html";
+        return "inicio.html";
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/lista")  // obtiene la lista de editoriales
     public String listar(ModelMap modelo) {
 
         List<Editorial> editoriales = editorialServicio.listarEditoriales();
@@ -53,14 +53,14 @@ public class EditorialControlador {
         return "editorial_list.html";
     }
 
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar/{id}") // modifica editoriales según id , método get
     public String modificar(@PathVariable String id, ModelMap modelo) {
         modelo.put("editorial", editorialServicio.getOne(id));
 
         return "editorial_modificar.html";
     }
 
-    @PostMapping("/modificar/{id}")
+    @PostMapping("/modificar/{id}") // modifica la editorial , método post
     public String modificar(@PathVariable String id, String nombre, ModelMap modelo) {
         try {
             editorialServicio.modificarEditorial(nombre, id);

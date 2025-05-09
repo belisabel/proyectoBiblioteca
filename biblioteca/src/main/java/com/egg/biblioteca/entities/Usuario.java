@@ -21,9 +21,7 @@ public class Usuario {
     private String password;
     @Enumerated(EnumType.STRING)
     Rol rol;
-    // Debemos indicar que es una enumeración con la anotación correspondiente e
-    // indicar qué tipo de estrategia utilizará con el dato. En este caso:
-    // EnumType.STRING
+    
 
     @OneToOne(fetch = FetchType.LAZY)
     private Imagen imagen;

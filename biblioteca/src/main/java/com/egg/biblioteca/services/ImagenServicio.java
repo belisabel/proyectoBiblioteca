@@ -13,7 +13,7 @@ import com.egg.biblioteca.entities.Imagen;
 import com.egg.biblioteca.exceptions.MyException;
 import com.egg.biblioteca.repositories.ImagenRepositorio;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ImagenServicio {
@@ -64,7 +64,7 @@ public class ImagenServicio {
     }
 
     // Método para listar todas las imágenes
-    @Transactional // (readOnly = true)
+    @Transactional(readOnly = true)
     public List<Imagen> listarTodos() {
         return imagenRepositorio.findAll();
     }

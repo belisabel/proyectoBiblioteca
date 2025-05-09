@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.egg.biblioteca.entities.Autor;
-import com.egg.biblioteca.entities.Editorial;
 import com.egg.biblioteca.exceptions.MyException;
-import com.egg.biblioteca.entities.Autor;
 import com.egg.biblioteca.repositories.AutorRepositorio;
-
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AutorServicio {
@@ -59,7 +56,7 @@ public class AutorServicio {
         }
     }
 
-    @Transactional //(readOnly = true)
+    @Transactional(readOnly = true)
     public Autor getOne(UUID id) {
         return autorRepositorio.getReferenceById(id);
     }

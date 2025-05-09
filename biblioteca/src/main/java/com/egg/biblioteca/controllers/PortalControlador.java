@@ -1,10 +1,8 @@
 package com.egg.biblioteca.controllers;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.egg.biblioteca.entities.Usuario;
+import com.egg.biblioteca.enumerations.Rol;
 import com.egg.biblioteca.exceptions.MyException;
 
 import com.egg.biblioteca.services.UsuarioServicio;
@@ -30,23 +29,23 @@ public class PortalControlador {
 
     @GetMapping("/") // Acá es donde realizamos el mapeo
     public String index() {
-        return "index.html";
+        return "inicio.html";
     }
 
-    @GetMapping("/registrar")
+    @GetMapping("/registrar") // lanza la vista de formulario registro
     public String registrar() {
         return "registro.html";
 
     }
 
-    @PostMapping("/registro")
+    @PostMapping("/registro") // registra un nuevo usuario
     public String registro(@RequestParam(required = false) String nombre, @RequestParam String email,
             @RequestParam String password, @RequestParam String password2, ModelMap modelo, MultipartFile archivo) {
 
         try {
             usuarioServicio.registrar(archivo, nombre, email, password, password2);
             modelo.put("exito", "Usuario registrado correctamente");
-            return "index.html";
+            return "inicio.html";
 
         } catch (MyException ex) {
 
@@ -59,7 +58,7 @@ public class PortalControlador {
 
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login") // lanza el formulario de login
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         if (error != null) {
             modelo.put("error", "Usuario o Contraseña inválidos!");
@@ -68,14 +67,19 @@ public class PortalControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @GetMapping("/inicio")
+    @GetMapping("/inicio") // vista de inicio , si es admin lanza la vista de administrador que es admin dashboard sino a la vista de inicio normal
     public String inicio(HttpSession session) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+
+        System.out.println("el rol es:" + logueado.getRol().toString());
         if (logueado.getRol().toString().equals("ADMIN")) {
+
             return "redirect:/admin/dashboard";
         }
         return "inicio.html";
     }
+
+ 
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/perfil")

@@ -1,7 +1,6 @@
 package com.egg.biblioteca.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +26,7 @@ import com.egg.biblioteca.exceptions.MyException;
 import com.egg.biblioteca.repositories.UsuarioRepositorio;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioServicio implements UserDetailsService {
@@ -39,7 +38,8 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void registrar(MultipartFile archivo,String nombre, String email, String password, String password2) throws MyException {
+    public void registrar(MultipartFile archivo, String nombre, String email, String password, String password2)
+            throws MyException {
 
         validar(nombre, email, password, password2);
         Usuario usuario = new Usuario();
@@ -47,7 +47,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setNombre(nombre);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         // usuario.setPassword(password);
-        Imagen imagen= imagenServicio.guardar(archivo);
+        Imagen imagen = imagenServicio.guardar(archivo);
         usuario.setImagen(imagen);
         usuario.setRol(Rol.USER);
         usuarioRepositorio.save(usuario);
@@ -70,12 +70,10 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
-  @Override
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-
         Usuario usuario = usuarioRepositorio.findByEmail(email);
-
 
         if (usuario != null) {
             List<GrantedAuthority> permisos = new ArrayList<>();
@@ -89,39 +87,59 @@ public class UsuarioServicio implements UserDetailsService {
             return null;
         }
 
-
-        
     }
 
-     @Transactional //(readOnly = true)
+    @Transactional(readOnly = true)
     public Usuario getOne(String id) {
         return usuarioRepositorio.getReferenceById(id);
     }
 
     @Transactional
-    public void actualizar(MultipartFile archivo, String idUsuario, String nombre, String email, String password, String password2) throws MyException {
+    public void actualizar(MultipartFile archivo, String idUsuario, String nombre, String email, String password,
+            String password2) throws MyException {
         validar(nombre, email, password, password2);
-    
+
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
         if (respuesta.isPresent()) {
-    
+
             Usuario usuario = respuesta.get();
             usuario.setNombre(nombre);
             usuario.setEmail(email);
             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
             usuario.setRol(Rol.USER);
-    
+
             UUID idImagen = null;
             if (usuario.getImagen() != null) {
                 idImagen = usuario.getImagen().getId();
             }
-    
+
             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
             usuario.setImagen(imagen);
-    
+
             usuarioRepositorio.save(usuario);
         }
     }
-    
+
+    @Transactional
+    public void actualizarRol(String idUsuario, Rol rol) throws MyException {
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+            usuario.setRol(rol);
+
+            usuarioRepositorio.save(usuario);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Usuario> listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+
+        usuarios = usuarioRepositorio.findAll();
+        return usuarios;
+
+    }
 
 }
