@@ -61,4 +61,15 @@ public class AutorServicio {
         return autorRepositorio.getReferenceById(id);
     }
 
+    @Transactional
+    public void eliminar(UUID id) throws MyException{
+        Optional<Autor> autorOpt = autorRepositorio.findById(id);
+        if (autorOpt.isPresent()) {
+            autorRepositorio.delete(autorOpt.get());
+        } else {
+            throw new MyException("El autor con el ID especificado no existe");
+        }
+
+    }
+
 }

@@ -72,4 +72,18 @@ public class EditorialControlador {
         }
     }
 
+    @PostMapping("/eliminar/{id}") // elimina editorial
+    public String eliminar(@PathVariable String id, ModelMap modelo) {
+        try {
+            editorialServicio.eliminar( id);
+
+            modelo.put("exito", "La editorial fue eliminada exitosamente, así mismo todos los libros que tienen esa editorial");
+
+            return  "inicio.html";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "editorial_list.html";
+        }
+    }
+
 }

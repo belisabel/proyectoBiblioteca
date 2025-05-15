@@ -33,6 +33,13 @@
                         <td th:text="${editorial.nombre}"></td>
                         <td>
                             <a sec:authorize="hasRole('ADMIN')" th:href= "@{/editorial/modificar/__${editorial.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+                            <form th:action="@{/editorial/eliminar/{id}(id=${editorial.id})}" method="post" style="display:inline;"
+                            onsubmit="return confirm('¿Estás seguro que deseas eliminar esta editorial?. También se eliminará todos los libros asociados a dicha editorial');">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </form>
+                        
                         </td>
 
                     </tr>

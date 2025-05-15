@@ -41,7 +41,6 @@ public class AdminControlador {
     return "usuarios_list.html"; // vista que contiene todos los usuarios de la plataforma de biblioteca
   }
 
- 
   // cambio de rol de admin a user o viceversa, sólo el administrador puede
   // realizar cambios.
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

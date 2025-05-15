@@ -82,7 +82,7 @@ public class PortalControlador {
  
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @GetMapping("/perfil")
+    @GetMapping("/perfil") // captura el usuario para poder iniciar el formulario de modificación
     public String perfil(ModelMap modelo, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         modelo.put("usuario", usuario);
@@ -90,7 +90,7 @@ public class PortalControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    @PostMapping("/perfil/{id}")
+    @PostMapping("/perfil/{id}") // formulario de modificación o actualización
     public String actualizar(MultipartFile archivo, @PathVariable String id, @RequestParam String nombre,
             @RequestParam String email, @RequestParam String password,
             @RequestParam String password2, ModelMap modelo) throws MyException {

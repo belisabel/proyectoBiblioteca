@@ -74,11 +74,25 @@ public class AutorControlador {
         try {
             autorServicio.modificarAutor(nombre, id);
 
-
+            modelo.put("exito", "El autor fue modificado exitosamente");
             return "redirect:../lista";
         } catch (MyException ex) {
             modelo.put("error", ex.getMessage());
             return "autor_modificar.html";
+        }
+    }
+
+    @PostMapping("/eliminar/{id}") // elimina autor
+    public String eliminar(@PathVariable UUID id, ModelMap modelo) {
+        try {
+            autorServicio.eliminar( id);
+
+            modelo.put("exito", "El autor fue eliminado exitosamente, así mismo todos los libros que tienen este autor");
+
+            return  "inicio.html";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "autor_list.html";
         }
     }
 

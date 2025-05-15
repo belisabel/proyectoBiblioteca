@@ -21,6 +21,7 @@ public class Imagen {
     @Column
     private String nombre;
     
+    // identificador de imagen:
     private String mime;
 
     public String getMime() {

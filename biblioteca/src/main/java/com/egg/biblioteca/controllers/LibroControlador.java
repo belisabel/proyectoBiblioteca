@@ -110,4 +110,18 @@ public class LibroControlador {
 
     }
 
+    @PostMapping("/eliminar/{isbn}") // elimina libro
+    public String eliminar(@PathVariable long isbn, ModelMap modelo) {
+        try {
+            libroServicio.eliminar( isbn);
+
+            modelo.put("exito", "El libro fue eliminado exitosamente");
+
+            return  "inicio.html";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "libro_list.html";
+        }
+    }
+
 }

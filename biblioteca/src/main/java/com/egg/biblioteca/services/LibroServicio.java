@@ -118,4 +118,15 @@ public class LibroServicio {
     public Libro getOne(Long isbn) {
         return libroRepositorio.getReferenceById(isbn);
     }
+
+    @Transactional
+    public void eliminar(Long isbn) throws MyException{
+        Optional<Libro> libroOpt = libroRepositorio.findById(isbn);
+        if (libroOpt.isPresent()) {
+            libroRepositorio.delete(libroOpt.get());
+        } else {
+            throw new MyException("El libro con el Isbn especificado no existe");
+        }
+
+    }
 }

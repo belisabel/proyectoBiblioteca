@@ -3,12 +3,12 @@ package com.egg.biblioteca.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.egg.biblioteca.entities.Autor;
 import com.egg.biblioteca.entities.Editorial;
 import com.egg.biblioteca.exceptions.MyException;
 
@@ -58,10 +58,20 @@ public class EditorialServicio {
         }
     }
 
-        @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public Editorial getOne(String id) {
         return editorialRepositorio.getReferenceById(id);
     }
 
+    @Transactional
+    public void eliminar(String id) throws MyException {
+        Optional<Editorial> editorialOpt = editorialRepositorio.findById(id);
+        if (editorialOpt.isPresent()) {
+            editorialRepositorio.delete(editorialOpt.get());
+        } else {
+            throw new MyException("La editorial con el ID especificado no existe");
+        }
+
+    }
 
 }

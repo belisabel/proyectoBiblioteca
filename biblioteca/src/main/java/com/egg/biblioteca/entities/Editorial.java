@@ -1,5 +1,7 @@
 package com.egg.biblioteca.entities;
 
+import java.util.List;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.*;
@@ -13,6 +15,11 @@ public class Editorial {
     private String id;
 
     private String nombre;
+
+    // relación una editorial a muchos libros. Para eliminar todos los libros asociados a la editorial especificada.
+    @OneToMany(mappedBy = "editorial", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Libro> libros;
+
     public Editorial() {
     }
 
